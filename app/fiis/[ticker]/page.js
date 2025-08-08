@@ -2,25 +2,7 @@
 
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
-ChartJS.register(
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend
-);
+import GraficoPrecoMedio from "@/components/GraficoPrecoMedio";
 
 export default function DetalheFii() {
   const params = useParams();
@@ -50,43 +32,6 @@ export default function DetalheFii() {
     }
   }, [ticker]);
 
-  const chartData = {
-    labels: fiis.map((fii) =>
-      new Date(fii.dataCompra).toLocaleDateString("pt-BR")
-    ),
-    datasets: [
-      {
-        label: "Preço Médio R$",
-        data: fiis.map((fii) => fii.precoMedio),
-        borderColor: "#4a524a",
-        backgroundColor: "rgba(74, 82, 74, 0.2)",
-        tension: 0.3,
-        pointRadius: 4,
-        pointBackgroundColor: "#4a524a",
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: { position: "top" },
-    },
-
-    scales: {
-      y: {
-        title: {
-          display: true,
-          text: "Preço médio(R$)",
-        },
-        beginAtZero: true,
-      },
-      x: {
-        title: { display: true, text: "Data compra" },
-      },
-    },
-  };
-
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Histórico compra {ticker}</h1>
@@ -115,7 +60,7 @@ export default function DetalheFii() {
         </table>
       )}
 
-      <Line data={chartData} options={options} />
+      <GraficoPrecoMedio fiis={fiis} />
     </div>
   );
 }

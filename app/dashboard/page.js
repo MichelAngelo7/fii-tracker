@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import GraficoHistoricoPizza from "@/components/GraficoHistoricoPizza";
 
 export default function Dashboard() {
   const [fiis, setFiis] = useState([]);
@@ -84,6 +85,8 @@ export default function Dashboard() {
           </table>
         </div>
       )}
+
+      <GraficoHistoricoPizza historico={fiis} />
     </div>
   );
 }
