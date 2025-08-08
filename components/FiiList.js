@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function FiiList() {
   const [fiis, setFiis] = useState([]);
@@ -7,6 +8,12 @@ export default function FiiList() {
 
   useEffect(() => {
     const dados = localStorage.getItem("fiis");
+
+    if (!dados) {
+      setLoading(false);
+      return;
+    }
+
     if (dados) {
       const dataParsed = JSON.parse(dados);
 
@@ -64,7 +71,14 @@ export default function FiiList() {
           <tbody>
             {fiis.map((fii, index) => (
               <tr key={String(fii.ticker)}>
-                <td className="border p-2">{fii.ticker}</td>
+                <td className="border p-2">
+                  <Link
+                    href={`/fiis/${fii.ticker}`}
+                    className="text-blue-500 underline"
+                  >
+                    {fii.ticker}
+                  </Link>
+                </td>
                 <td className="border p-2">{fii.quantidade}</td>
                 <td className="border p-2">{fii.precoMedio}</td>
                 <td className="border p-2">{fii.dataCompra}</td>
